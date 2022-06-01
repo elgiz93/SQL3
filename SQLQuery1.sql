@@ -51,7 +51,41 @@ Select Name, Price From Phones where Price Between 1000 and 1500
 Select Name, Price From Phones where Price> 1500
 
 --8
-Select Name, COUNT(Name) From Notebooks Group By BrandId Having COUNT(BrandId) > 1
+Select Brands.Name, Count(Brands.Id) 'Count' From Brands Join Notebooks On Notebooks.BrandId=Brands.Id Group By Brands.Name
+
+--9
+Select Brands.Name, Count(Brands.Id) 'Count' From Brands Join Phones On Phones.BrandId=Brands.Id Group By Brands.Name
+
+--10
+Select Name, BrandId From Notebooks
+Union
+Select Name, BrandId From Phones
+
+--11
+Select * From Notebooks
+Union All
+Select * From Phones
+
+--12
+Select n.Id,n.Name,n.Price,b.Name 'BrandName' From Notebooks n Join Brands b On n.BrandId=b.Id
+Union All
+Select p.Id,p.Name,p.Price,b.Name 'BrandName'  From Phones p Join Brands b On p.BrandId=b.Id
+
+--13 
+Select n.Id,n.Name,n.Price,b.Name 'BrandName' From Notebooks n Join Brands b On n.BrandId=b.Id Where n.Price>1000
+Union All
+Select p.Id,p.Name,p.Price,b.Name 'BrandName'  From Phones p Join Brands b On p.BrandId=b.Id Where p.Price>1000
+
+--14
+Select b.Name, Sum(p.Price) 'Total Price',Count(*) 'Product count' From Brands b
+Join Phones p On p.BrandsId=b.Id
+Group by b.Name
+
+--15
+Select b.Name, Sum(n.Price) 'Total Price',Count(*) 'Product count' From Brands b
+Join Notebooks n On n.BrandsId=b.Id
+Group by b.Name Having Count(*)>3
+
 
 
 
